@@ -19,7 +19,9 @@ public:
 
 signals:
 	void showRecvData(QString ip, QString data);	//收到数据，发送信号给ui线程
+signals:
 	void showRecvIP(QString ip, bool added);	//连入客户端，发送信号给ui线程
+signals:
 	void sendData(QString ip, QString data);	//有数据发送，发送信号给clientsend线程
 
 protected:

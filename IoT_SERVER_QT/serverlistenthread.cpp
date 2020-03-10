@@ -58,9 +58,29 @@ void ServerListenThread::run() {
 			ClientSendThread* sendthread = new ClientSendThread(pClient);
 			clientRecvVector.push_back(recvthread);
 			clientSendVector.push_back(sendthread);
+			connect(recvthread, SIGNAL(Recv(QString, QString)), this, SLOT(getRecvData(QString,QString)));
+			connect(sendthread, SIGNAL(disconnect(QString)), this, SLOT(clientDisconnect(QString)));
 
 			//连入客户端，发送信号给ui线程
 			emit showRecvIP(QString(pClientIP), true);
 		}
+	}
+}
+
+/**
+* @brief 收到客户端数据
+* @param ip 收到数据的客户端ip
+* @param data 收到的数据
+*/
+void ServerListenThread::getRecvData(QString ip, QString data)
+{
+	if (!strncmp(PING, temp, strlen(PING)))
+	{
+		strcpy(dataBuf, PING);
+		//加上ODOA回车换行
+		dataBuf[strlen(PING)] = '\r';
+		dataBuf[strlen(PING) + 1] = '\n';
+		dataBuf[strlen(PING) + 2] = 0;
+		pClient->IsSend();
 	}
 }

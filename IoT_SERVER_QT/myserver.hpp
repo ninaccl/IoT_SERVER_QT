@@ -7,7 +7,6 @@
 
 
 // Need to link with Ws2_32.lib
-using namespace std;
 #pragma comment(lib, "ws2_32.lib")			//动态库函数
 
 using namespace std;
