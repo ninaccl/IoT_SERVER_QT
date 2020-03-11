@@ -1,6 +1,8 @@
 ﻿#include "myserver.hpp"
 
-MyServer::MyServer(QString ip, QString port, QObject * parent = Q_NULLPTR) : QObject(parent) {
+MyServer::MyServer(QString ip, QString port, QObject * parent) : QObject(parent) {
+	this->ip = ip;
+	this->port = port;
 	initServer();
 }
 

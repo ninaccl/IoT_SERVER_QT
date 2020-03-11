@@ -9,6 +9,7 @@
 using namespace std;
 
 #define TIMEFOR_ACCEPTTHREAD_SLEEP 500	//等待客户端请求线程睡眠时间
+#define PING "ping"	 //发送标志
 
 class ServerListenThread : public QThread {
 	Q_OBJECT
@@ -16,12 +17,14 @@ class ServerListenThread : public QThread {
 public:
 	ServerListenThread(QString ip, QString port, QObject * parent = Q_NULLPTR);
 	~ServerListenThread();
+	template<class T>
+	void clearVector(vector<T*> v);
+	template<class T>
+	void clearDisconnectClient(vector<T*> v, QString ip);
 
 signals:
 	void showRecvData(QString ip, QString data);	//收到数据，发送信号给ui线程
-signals:
 	void showRecvIP(QString ip, bool added);	//连入客户端，发送信号给ui线程
-signals:
 	void sendData(QString ip, QString data);	//有数据发送，发送信号给clientsend线程
 
 protected:
@@ -38,7 +41,7 @@ private:
 
 private slots :
 	void getRecvData(QString ip, QString data);	//收到clientrecv线程传来的信号，得到客户端收到数据
-	void clientDisconnect(QString ip);	//收到clientsend线程传来的信号，指示客户端断联
+	void clientDisconnect(QString ip);	//收到clientrecv线程和clientsend线程传来的信号，指示客户端断联
 	void getSendLightData(QString ip, QString data);	//收到ui线程传来的灯控信号，转发给clientsend线程
 	
 };

@@ -13,7 +13,7 @@ public:
 	MyClient(SOCKET sClient, sockaddr_in addrClient, QObject * parent = Q_NULLPTR);
 	~MyClient();
 	SOCKET getSocket();
-	QString getIP();
+	QString getIPandPort();
 
 private:
 	SOCKET m_socket;	//套接字

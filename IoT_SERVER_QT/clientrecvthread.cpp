@@ -5,9 +5,12 @@ ClientRecvThread::ClientRecvThread(MyClient *pClient, QObject * parent) : QThrea
 }
 
 ClientRecvThread::~ClientRecvThread() {
-	
+	delete pClient;
 }
 
+/**
+* @brief 客户端接收线程
+*/
 void ClientRecvThread::run()
 {
 	int		reVal;							//返回值
@@ -44,8 +47,16 @@ void ClientRecvThread::run()
 		{
 			temp[reVal] = '\0';
 			QString data(temp);
-			emit Recv(pClient->getIP(), data);
+			emit Recv(pClient->getIPandPort(), data);
 		}
 	}
-	emit disconnect(pClient->getIP());
+	emit disconnect(pClient->getIPandPort());
+}
+
+/**
+* @brief 获取ip
+* @return 返回ip
+*/
+QString ClientRecvThread::getIPandPort() {
+	return pClient->getIPandPort();
 }

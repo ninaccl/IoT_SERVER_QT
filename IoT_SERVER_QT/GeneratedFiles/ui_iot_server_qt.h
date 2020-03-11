@@ -147,6 +147,7 @@ public:
         IoT_SERVER_QTClass->setWindowTitle(QApplication::translate("IoT_SERVER_QTClass", "IoT_SERVER_QT", Q_NULLPTR));
         ipLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "IP", Q_NULLPTR));
         portLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "Port", Q_NULLPTR));
+        portLineEdit->setText(QApplication::translate("IoT_SERVER_QTClass", "8081", Q_NULLPTR));
         connectPushButton->setText(QApplication::translate("IoT_SERVER_QTClass", "Connect", Q_NULLPTR));
         dataLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "Data", Q_NULLPTR));
     } // retranslateUi

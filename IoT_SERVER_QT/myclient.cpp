@@ -10,12 +10,20 @@ MyClient::~MyClient() {
 	m_socket = INVALID_SOCKET;		//套接字无效
 }
 
+/**
+* @brief 获取Socket
+* @return 返回Socket
+*/
 SOCKET MyClient::getSocket()
 {
 	return m_socket;
 }
 
-QString MyClient::getIP()
+/**
+* @brief 获取ip和port
+* @return 返回ip和port
+*/
+QString MyClient::getIPandPort()
 {
-	return QString(inet_ntoa(m_addr.sin_addr));
+	return QString(inet_ntoa(m_addr.sin_addr)) + ":" + QString::number(m_addr.sin_port);
 }

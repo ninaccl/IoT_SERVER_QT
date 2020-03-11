@@ -67,6 +67,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="text">
+         <string>8081</string>
+        </property>
        </widget>
       </item>
       <item>

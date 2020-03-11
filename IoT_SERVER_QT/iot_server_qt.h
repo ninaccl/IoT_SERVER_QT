@@ -26,7 +26,7 @@ private slots:
 
 private:
 	Ui::IoT_SERVER_QTClass ui;
-	ServerListenThread *listenThread;
+	ServerListenThread *listenThread = NULL;
 };
 
 #endif // IOT_SERVER_QT_H
