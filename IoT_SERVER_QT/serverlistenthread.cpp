@@ -11,9 +11,15 @@ ServerListenThread::ServerListenThread(QString ip, QString port, QObject * paren
 }
 
 ServerListenThread::~ServerListenThread() {
-	clearVector(clientvector);
+	for (auto it = clientRecvVector.begin(); it != clientRecvVector.end(); it++)
+	{
+		(*it)->changestate();
+		(*it)->quit();
+		(*it)->wait();
+	}
 	clearVector(clientRecvVector);
 	clearVector(clientSendVector);
+	clearVector(clientvector);
 	delete myserver;
 }
 
@@ -104,9 +110,9 @@ void ServerListenThread::clientDisconnect(QString ip)
 	}
 	else
 	{
-		clearDisconnectClient(clientvector, ip);
 		clearDisconnectClient(clientRecvVector, ip);
 		clearDisconnectClient(clientSendVector, ip);
+		clearDisconnectClient(clientvector, ip);
 	}
 	emit showRecvIP(ip, false);
 }
@@ -116,7 +122,7 @@ void ServerListenThread::clientDisconnect(QString ip)
 * @param v 存放线程或类的容器
 */
 template<class T>
-void ServerListenThread::clearVector(vector<T*> v)
+void ServerListenThread::clearVector(vector<T*> &v)
 {
 	for (auto iter = v.begin(); iter != v.end();)
 	{
@@ -133,7 +139,7 @@ void ServerListenThread::clearVector(vector<T*> v)
 * @param v 存放线程或类的容器
 */
 template<class T>
-void ServerListenThread::clearDisconnectClient(vector<T*> v, QString ip) {
+void ServerListenThread::clearDisconnectClient(vector<T*> &v, QString ip) {
 	//清理已断开的连接客户端内存空间
 	for(auto iter = v.begin(); iter != v.end(); iter++)
 	{
@@ -159,4 +165,12 @@ void ServerListenThread::getSendLightData(QString ip, QString data) {
 			(*it)->sendDatatoClient(ip, data);
 		}
 	}
+}
+
+/**
+* @brief 改变运行状态
+*/
+void ServerListenThread::changeState()
+{
+	bConning = false;
 }

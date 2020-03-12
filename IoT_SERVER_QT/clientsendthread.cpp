@@ -5,7 +5,6 @@ ClientSendThread::ClientSendThread(MyClient *pClient, QObject * parent) : QObjec
 }
 
 ClientSendThread::~ClientSendThread() {
-	delete pClient;
 }
 
 

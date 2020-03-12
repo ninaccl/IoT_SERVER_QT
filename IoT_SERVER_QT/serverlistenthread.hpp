@@ -18,9 +18,10 @@ public:
 	ServerListenThread(QString ip, QString port, QObject * parent = Q_NULLPTR);
 	~ServerListenThread();
 	template<class T>
-	void clearVector(vector<T*> v);
+	void clearVector(vector<T*> &v);
 	template<class T>
-	void clearDisconnectClient(vector<T*> v, QString ip);
+	void clearDisconnectClient(vector<T*> &v, QString ip);
+	void changeState();	//改变运行状态
 
 signals:
 	void showRecvData(QString ip, QString data);	//收到数据，发送信号给ui线程

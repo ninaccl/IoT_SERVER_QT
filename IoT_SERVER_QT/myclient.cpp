@@ -3,6 +3,10 @@
 MyClient::MyClient(SOCKET sClient, sockaddr_in addrClient, QObject * parent) : QObject(parent) {
 	m_socket = sClient;
 	m_addr = addrClient;
+
+	//将套接字改为非阻塞
+	unsigned long ul = 1;
+	ioctlsocket(m_socket, FIONBIO, (unsigned long*)&ul);
 }
 
 MyClient::~MyClient() {

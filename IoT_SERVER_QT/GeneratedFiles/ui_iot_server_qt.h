@@ -44,8 +44,13 @@ public:
     QTableWidget *tableWidget;
     QSpacerItem *verticalSpacer;
     QVBoxLayout *verticalLayout_2;
-    QLabel *dataLabel;
+    QLabel *recvDataLabel;
     QTextEdit *recvTextEdit;
+    QLabel *sendDataLabel;
+    QHBoxLayout *horizontalLayout_2;
+    QTextEdit *sendTextEdit;
+    QVBoxLayout *verticalLayout_3;
+    QPushButton *sendPushButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -112,15 +117,49 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, -1, -1, -1);
-        dataLabel = new QLabel(centralWidget);
-        dataLabel->setObjectName(QStringLiteral("dataLabel"));
+        recvDataLabel = new QLabel(centralWidget);
+        recvDataLabel->setObjectName(QStringLiteral("recvDataLabel"));
 
-        verticalLayout_2->addWidget(dataLabel);
+        verticalLayout_2->addWidget(recvDataLabel);
 
         recvTextEdit = new QTextEdit(centralWidget);
         recvTextEdit->setObjectName(QStringLiteral("recvTextEdit"));
 
         verticalLayout_2->addWidget(recvTextEdit);
+
+        sendDataLabel = new QLabel(centralWidget);
+        sendDataLabel->setObjectName(QStringLiteral("sendDataLabel"));
+
+        verticalLayout_2->addWidget(sendDataLabel);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(-1, 0, -1, -1);
+        sendTextEdit = new QTextEdit(centralWidget);
+        sendTextEdit->setObjectName(QStringLiteral("sendTextEdit"));
+
+        horizontalLayout_2->addWidget(sendTextEdit);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, -1, -1, -1);
+        sendPushButton = new QPushButton(centralWidget);
+        sendPushButton->setObjectName(QStringLiteral("sendPushButton"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(sendPushButton->sizePolicy().hasHeightForWidth());
+        sendPushButton->setSizePolicy(sizePolicy);
+
+        verticalLayout_3->addWidget(sendPushButton);
+
+
+        horizontalLayout_2->addLayout(verticalLayout_3);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
@@ -149,7 +188,9 @@ public:
         portLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "Port", Q_NULLPTR));
         portLineEdit->setText(QApplication::translate("IoT_SERVER_QTClass", "8081", Q_NULLPTR));
         connectPushButton->setText(QApplication::translate("IoT_SERVER_QTClass", "Connect", Q_NULLPTR));
-        dataLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "Data", Q_NULLPTR));
+        recvDataLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "RecvData", Q_NULLPTR));
+        sendDataLabel->setText(QApplication::translate("IoT_SERVER_QTClass", "SendData", Q_NULLPTR));
+        sendPushButton->setText(QApplication::translate("IoT_SERVER_QTClass", "Send", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -18,6 +18,7 @@ IoT_SERVER_QT::IoT_SERVER_QT(QWidget *parent)
 	ui.ipLineEdit->setText(ip);
 
 	connect(ui.connectPushButton, &QPushButton::clicked, this, &IoT_SERVER_QT::startServer);
+	connect(ui.sendPushButton, &QPushButton::clicked, this, &IoT_SERVER_QT::getSendTextandIP);
 
 	ui.tableWidget->setColumnCount(2);
 	ui.tableWidget->setHorizontalHeaderLabels(QStringList() << "ip" << "lightbutton");
@@ -45,7 +46,7 @@ void IoT_SERVER_QT::startServer()
 	{
 		//服务器初始化
 		listenThread = new ServerListenThread(ip, port);
-		connect(this, SIGNAL(sendLightControl(QString, QString)), listenThread, SLOT(getSendLightData(QString, QString)));
+		connect(this, SIGNAL(sendDataToListenThread(QString, QString)), listenThread, SLOT(getSendLightData(QString, QString)));
 		connect(listenThread, SIGNAL(showRecvData(QString, QString)), this, SLOT(recvData(QString, QString)));
 		connect(listenThread, SIGNAL(showRecvIP(QString, bool)), this, SLOT(showClient(QString, bool)));
 		listenThread->start();
@@ -55,8 +56,11 @@ void IoT_SERVER_QT::startServer()
 	else
 	{
 		//停止线程运行
+		listenThread->changeState();
 		listenThread->quit();
+		listenThread->wait();
 		delete listenThread;
+		listenThread = NULL;
 		//修改按钮名称
 		ui.connectPushButton->setText("Connect");
 	}
@@ -121,5 +125,20 @@ void IoT_SERVER_QT::controlLight()
 		}
 	}
 	//发出LIGHT信号
-	emit sendLightControl(ip, "light");
+	emit sendDataToListenThread(ip, "light");
+}
+
+/**
+* @brief 得到选中的IP和输入的待发送数据
+* @param ip 选中的客户端ip
+* @param data 待发送的数据
+*/
+void IoT_SERVER_QT::getSendTextandIP()
+{
+	QString data = ui.sendTextEdit->toPlainText();
+	int curR = ui.tableWidget->currentRow();
+	if (curR < 0)
+		return;
+	QString ip = ui.tableWidget->item(curR, 0)->text();
+	emit sendDataToListenThread(ip, data);
 }

@@ -62,6 +62,11 @@ bool MyServer::initSocket() {
 	serAddr.sin_family = AF_INET;
 	serAddr.sin_port = htons(port.toUShort());
 	serAddr.sin_addr.S_un.S_addr = inet_addr(ip.toStdString().c_str());
+
+	//将套接字改为非阻塞
+	unsigned long ul = 1;
+	ioctlsocket(listenSocket, FIONBIO, (unsigned long*)&ul);
+
 	reVal = bind(listenSocket, (struct sockaddr*)&serAddr, sizeof(serAddr));
 	if (SOCKET_ERROR == reVal)
 		return FALSE;
